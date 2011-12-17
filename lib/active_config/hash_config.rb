@@ -19,7 +19,7 @@ class ActiveConfig
     #     :address: info_not_available
     #     ? [name, employer]
     #     : not_verified
-    # 
+    #
     # Allows the following calls:
     # foo.customer.id   --> 12345678
     # foo.customer.verified.phone  --> verified
@@ -28,8 +28,8 @@ class ActiveConfig
     # foo.customer.verified(:address) --> info_not_available
     #
     # Note that :address is specified as a symbol, where phone is just a string.
-    # Depending on what kind of parameter the method being mocked out is going 
-    # to be called with, define in the YAML file either a string or a symbol.  
+    # Depending on what kind of parameter the method being mocked out is going
+    # to be called with, define in the YAML file either a string or a symbol.
     # This also works inside the composite array keys.
     def method_missing(method, *args)
       method = method.to_s
@@ -49,8 +49,8 @@ class ActiveConfig
       # value =  convert_value(value)
       value
     end
-    
-    ## 
+
+    ##
     # Why the &*#^@*^&$ isn't HashWithIndifferentAccess actually doing this?
     #
     def [](key)
@@ -70,8 +70,8 @@ class ActiveConfig
       key = key.to_s if key.is_a?(Symbol)
       key == @@no_key ? self['default'] : default_Hash(key == @@no_key ? nil : key)
     end
-    
-    ## 
+
+    ##
     # HashWithIndifferentAccess#update is broken!
     # This took way too long to figure this out:
     #
@@ -79,7 +79,7 @@ class ActiveConfig
     # BUT,
     # HashWithIndifferentAccess#update does not!
     #
-    #   { :a => 1 }.update({ :b => 2, :c => 3 }) 
+    #   { :a => 1 }.update({ :b => 2, :c => 3 })
     #   => { :a => 1, :b => 2, :c => 3 }
     #
     #   HashWithIndifferentAccess.new({ :a => 1 }).update({ :b => 2, :c => 3 })
@@ -93,7 +93,7 @@ class ActiveConfig
       self
     end
 
-    ## 
+    ##
     # Override WithIndifferentAccess#convert_value
     # return instances of this class for Hash values.
     #
@@ -105,6 +105,6 @@ class ActiveConfig
       end
       value
     end
-    
+
   end
 end

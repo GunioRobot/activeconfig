@@ -5,7 +5,7 @@ class ActiveConfig
     def write_hooks
       @write_hooks||=[]
     end
-    def regular_writer *args 
+    def regular_writer *args
       write_hooks.each{|p|p.call}
       regular_writer_hwh(*args)
     end
@@ -29,11 +29,11 @@ class ActiveConfig
       @symbols=HashWithHooks.new
       @symbols[:hostname]=proc {|sym_table| ENV['ACTIVE_CONFIG_HOSTNAME'] ||
        Socket.gethostname
-      } 
+      }
       @symbols[:hostname_short]=proc {|sym_table| sym_table[:hostname].call(sym_table).sub(/\..*$/, '').freeze}
-      @symbols[:rails_env]=proc { |sym_table| 
+      @symbols[:rails_env]=proc { |sym_table|
         ((defined?(Rails) && Rails.respond_to?(:env)) ? Rails.env : nil) ||
-        (defined?(RAILS_ENV) ? RAILS_ENV : nil) || 
+        (defined?(RAILS_ENV) ? RAILS_ENV : nil) ||
         ENV['RAILS_ENV']
       }
       @symbols[:overlay]=proc { |sym_table| ENV['ACTIVE_CONFIG_OVERLAY']}
@@ -52,14 +52,14 @@ class ActiveConfig
        :local,
       ]
     end
-    def method_missing method, val=nil 
+    def method_missing method, val=nil
       super if method.to_s=~/^_/
       if method.to_s=~/^(.*)=$/
         ac_instance._flush_cache
         return @symbols[$1]=val
-      end      
+      end
       ret=@symbols[method]
-      if ret 
+      if ret
         return ret.call(@symbols) if ret.respond_to?(:call)
         return ret
       end

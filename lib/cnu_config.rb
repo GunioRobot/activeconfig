@@ -30,7 +30,7 @@ class CnuConfigClass < ActiveConfig
     @_suffixes_obj||=Suffixes.new
   end
   def _overlay= x
-    _suffixes.priority=[   
+    _suffixes.priority=[
       nil,
       [:overlay, nil],
       [:local],
@@ -44,7 +44,7 @@ class CnuConfigClass < ActiveConfig
       [:hostname, :config_local],
       [:overlay, [:hostname, :config_local]]
     ]
-    super 
+    super
   end
   def _config_path
     @config_path||= ENV['CNU_CONFIG_PATH']
